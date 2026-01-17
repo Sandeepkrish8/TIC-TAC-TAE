@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ultimate Tic Tac Toe Experience</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <!-- Particles Background -->
+  <div class="particles" id="particles"></div>
+  
+  <!-- Theme Toggle -->
+  <div class="theme-selector">
+    <button class="theme-btn" data-theme="default"><i class="fas fa-palette"></i></button>
+    <button class="theme-btn" data-theme="neon"><i class="fas fa-bolt"></i></button>
+    <button class="theme-btn" data-theme="dark"><i class="fas fa-moon"></i></button>
+    <button class="theme-btn" data-theme="nature"><i class="fas fa-leaf"></i></button>
+    <button class="theme-btn" data-theme="retro"><i class="fas fa-gamepad"></i></button>
+  </div>
+
+  <!-- Settings Panel -->
+  <div class="settings-panel" id="settingsPanel">
+    <button class="settings-toggle" id="settingsToggle">⚙️</button>
+    <div class="settings-content">
+      <div class="setting-item">
+        <label>Sound Effects</label>
+        <input type="checkbox" id="soundToggle" checked>
+      </div>
+      <div class="setting-item">
+        <label>Animations</label>
+        <input type="checkbox" id="animationToggle" checked>
+      </div>
+      <div class="setting-item">
+        <label>Particle Effects</label>
+        <input type="checkbox" id="particleToggle" checked>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-container">
+    <h1 class="title">
+      <span class="title-main">Ultimate Tic Tac Toe</span>
+      <span class="title-sub">Enhanced Gaming Experience</span>
+    </h1>
+
+    <!-- Game Mode Selection -->
+    <div class="mode-selector">
+      <button class="mode-btn active" data-mode="ai">🤖 vs AI</button>
+      <button class="mode-btn" data-mode="pvp">👥 Player vs Player</button>
+      <button class="mode-btn" data-mode="tournament">🏆 Tournament</button>
+    </div>
+
+    <!-- Board Size Selection -->
+    <div class="size-selector">
+      <button class="size-btn active" data-size="3">3×3</button>
+      <button class="size-btn" data-size="4">4×4</button>
+      <button class="size-btn" data-size="5">5×5</button>
+    </div>
+
+    <div class="controls">
+      <input type="text" id="player1" placeholder="Player 1 Name (X)">
+      <input type="text" id="player2" placeholder="Player 2/AI Name (O)" style="display:none;">
+
+      <select id="difficulty">
+        <option value="easy">😄 Easy</option>
+        <option value="medium">🤔 Medium</option>
+        <option value="hard">😈 Hard</option>
+        <option value="adaptive">🧠 Adaptive</option>
+      </select>
+
+      <button id="start">🎮 Start Game</button>
+      <button id="hints" style="display:none;">💡 Get Hint</button>
+    </div>
+
+    <div class="status-container">
+      <h2 id="status" class="status">Select game mode to start</h2>
+      <div class="turn-indicator" id="turnIndicator"></div>
+    </div>
+
+    <!-- Enhanced Scoreboard -->
+    <div class="scoreboard-enhanced">
+      <div class="player-stats">
+        <div class="player-card" id="player1Card">
+          <div class="player-avatar">👤</div>
+          <div class="player-info">
+            <h3 id="player1Name">Player 1</h3>
+            <div class="score" id="player1Score">0</div>
+            <div class="wins-streak" id="player1Streak">Streak: 0</div>
+          </div>
+        </div>
+        <div class="vs-indicator">VS</div>
+        <div class="player-card" id="player2Card">
+          <div class="player-avatar">🤖</div>
+          <div class="player-info">
+            <h3 id="player2Name">AI</h3>
+            <div class="score" id="player2Score">0</div>
+            <div class="wins-streak" id="player2Streak">Streak: 0</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Statistics Dashboard -->
+      <div class="stats-dashboard">
+        <div class="stat-item">
+          <span class="stat-label">Games Played:</span>
+          <span class="stat-value" id="gamesPlayed">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Win Rate:</span>
+          <span class="stat-value" id="winRate">0%</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Best Streak:</span>
+          <span class="stat-value" id="bestStreak">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Avg Game Time:</span>
+          <span class="stat-value" id="avgTime">0s</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dynamic Game Board -->
+    <div class="board-container">
+      <div class="board" id="gameBoard">
+        <div class="cell" data-index="0"></div><div class="cell" data-index="1"></div><div class="cell" data-index="2"></div>
+        <div class="cell" data-index="3"></div><div class="cell" data-index="4"></div><div class="cell" data-index="5"></div>
+        <div class="cell" data-index="6"></div><div class="cell" data-index="7"></div><div class="cell" data-index="8"></div>
+      </div>
+    </div>
+
+    <!-- Enhanced Controls -->
+    <div class="game-controls">
+      <button id="restart" class="control-btn">🔄 New Game</button>
+      <button id="undo" class="control-btn" style="display:none;">↶ Undo</button>
+      <button id="saveGame" class="control-btn">💾 Save</button>
+      <button id="loadGame" class="control-btn">📁 Load</button>
+    </div>
+
+    <!-- Tournament Bracket -->
+    <div class="tournament-bracket" id="tournamentBracket" style="display:none;">
+      <h3>Tournament Progress</h3>
+      <div class="bracket-rounds" id="bracketRounds"></div>
+    </div>
+
+    <!-- Achievements Panel -->
+    <div class="achievements-panel" id="achievementsPanel">
+      <h3>🏆 Achievements</h3>
+      <div class="achievements-grid" id="achievementsGrid"></div>
+    </div>
+
+    <!-- Replay Controls -->
+    <div class="replay-controls" id="replayControls" style="display:none;">
+      <h3>📼 Game Replay</h3>
+      <div class="replay-buttons">
+        <button id="replayStart">⏪</button>
+        <button id="replayPrev">⏮</button>
+        <button id="replayPlay">▶️</button>
+        <button id="replayNext">⏭</button>
+        <button id="replayEnd">⏩</button>
+      </div>
+      <div class="replay-timeline" id="replayTimeline"></div>
+    </div>
+  </div>
+
+  <!-- Enhanced Audio System -->
+  <audio id="clickSound" src="https://assets.mixkit.co/active_storage/sfx/3005/3005-preview.mp3" preload="auto"></audio>
+  <audio id="winSound" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3" preload="auto"></audio>
+  <audio id="drawSound" src="https://assets.mixkit.co/active_storage/sfx/2053/2053-preview.mp3" preload="auto"></audio>
+  <audio id="hoverSound" src="https://assets.mixkit.co/active_storage/sfx/2997/2997-preview.mp3" preload="auto"></audio>
+  <audio id="achievementSound" src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3" preload="auto"></audio>
+  <audio id="countdownSound" src="https://assets.mixkit.co/active_storage/sfx/3009/3009-preview.mp3" preload="auto"></audio>
+
+  <!-- Enhanced Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+
+  <script src="advanced-features.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
